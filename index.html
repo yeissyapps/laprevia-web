@@ -1,707 +1,112 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="La Previa — El juego de beber definitivo. +13 juegos en una sola app, gratis, sin suscripciones. Descárgala ahora para iOS y Android.">
-<meta name="keywords" content="juegos para beber, chupitos, fiesta, yo nunca, verdad o reto, juegos de beber gratis">
-<title>La Previa — Juegos para Beber</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --purple: #7C3AED;
-    --purple-dark: #5B21B6;
-    --purple-light: #EDE9FE;
-    --purple-mid: #A78BFA;
-    --black: #0A0A0A;
-    --white: #FFFFFF;
-    --coral: #EF4444;
-    --gold: #F59E0B;
-    --gray: #6B7280;
-    --gray-light: #F9FAFB;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    color: var(--black);
-    background: var(--white);
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(124,58,237,0.08);
-  }
-
-  .nav-logo {
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: var(--black);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .nav-logo span { color: var(--purple); }
-
-  .nav-cta {
-    background: var(--purple);
-    color: white;
-    padding: 0.6rem 1.4rem;
-    border-radius: 100px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: transform 0.15s, background 0.15s;
-  }
-
-  .nav-cta:hover { background: var(--purple-dark); transform: translateY(-1px); }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8rem 2rem 5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -10%;
-    left: -10%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(167,139,250,0.10) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--purple-light);
-    color: var(--purple);
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    margin-bottom: 1.5rem;
-    width: fit-content;
-    letter-spacing: 0.02em;
-  }
-
-  .hero-headline {
-    font-size: clamp(3.5rem, 10vw, 8rem);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    max-width: 14ch;
-  }
-
-  .hero-headline .accent { color: var(--purple); }
-
-  .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    color: var(--gray);
-    max-width: 42ch;
-    line-height: 1.6;
-    margin-bottom: 2.5rem;
-    font-weight: 400;
-  }
-
-  .hero-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 4rem;
-  }
-
-  .btn-store {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.9rem 1.6rem;
-    border-radius: 14px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-
-  .btn-store:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,0.25); }
-
-  .btn-store.primary { background: var(--black); color: white; }
-  .btn-store.secondary { background: var(--white); color: var(--black); border: 2px solid #E5E7EB; }
-
-  .btn-store-icon { font-size: 1.8rem; line-height: 1; }
-
-  .btn-store-text { display: flex; flex-direction: column; align-items: flex-start; }
-  .btn-store-text small { font-size: 0.7rem; font-weight: 400; opacity: 0.7; }
-  .btn-store-text strong { font-size: 1rem; }
-
-  .hero-social-proof {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .hero-stars { color: var(--gold); font-size: 1.1rem; letter-spacing: -1px; }
-
-  .hero-proof-text { font-size: 0.85rem; color: var(--gray); }
-  .hero-proof-text strong { color: var(--black); }
-
-  /* SCROLL TICKER */
-  .ticker {
-    background: var(--purple);
-    color: white;
-    padding: 0.8rem 0;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  .ticker-inner {
-    display: inline-flex;
-    gap: 3rem;
-    animation: ticker 25s linear infinite;
-  }
-
-  .ticker-inner span {
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 0.02em;
-  }
-
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  /* JUEGOS */
-  .section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
-
-  .section-eyebrow {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--purple);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-  }
-
-  .section-sub {
-    font-size: 1.1rem;
-    color: var(--gray);
-    max-width: 50ch;
-    line-height: 1.6;
-    margin-bottom: 3.5rem;
-  }
-
-  .games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-
-  .game-card {
-    background: var(--gray-light);
-    border-radius: 16px;
-    padding: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    transition: transform 0.15s, background 0.15s;
-    cursor: default;
-    border: 1.5px solid transparent;
-  }
-
-  .game-card:hover {
-    transform: translateY(-2px);
-    background: var(--purple-light);
-    border-color: rgba(124,58,237,0.2);
-  }
-
-  .game-emoji { font-size: 2rem; line-height: 1; flex-shrink: 0; }
-
-  .game-info { min-width: 0; }
-
-  .game-name {
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--black);
-    line-height: 1.2;
-  }
-
-  .game-players {
-    font-size: 0.75rem;
-    color: var(--gray);
-    margin-top: 0.2rem;
-  }
-
-  /* MODOS */
-  .modos-section { background: var(--black); color: white; padding: 6rem 2rem; }
-
-  .modos-inner { max-width: 1200px; margin: 0 auto; }
-
-  .modos-section .section-eyebrow { color: var(--purple-mid); }
-  .modos-section .section-title { color: white; }
-  .modos-section .section-sub { color: rgba(255,255,255,0.6); }
-
-  .modos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-
-  .modo-card {
-    border-radius: 20px;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s;
-  }
-
-  .modo-card:hover { transform: translateY(-3px); }
-
-  .modo-card.escalada { background: linear-gradient(135deg, #7C3AED, #5B21B6); }
-  .modo-card.competicion { background: linear-gradient(135deg, #EF4444, #B91C1C); }
-  .modo-card.libre { background: linear-gradient(135deg, #1F2937, #374151); border: 1px solid rgba(255,255,255,0.1); }
-
-  .modo-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-  .modo-name { font-size: 1.4rem; font-weight: 800; color: white; margin-bottom: 0.5rem; }
-  .modo-desc { font-size: 0.9rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
-
-  /* POR QUÉ */
-  .porques { background: var(--gray-light); padding: 6rem 2rem; }
-  .porques-inner { max-width: 1200px; margin: 0 auto; }
-
-  .porques-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .porque-card {
-    background: white;
-    border-radius: 16px;
-    padding: 2rem;
-    border: 1.5px solid #E5E7EB;
-  }
-
-  .porque-icon { font-size: 2rem; margin-bottom: 1rem; }
-  .porque-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .porque-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
-
-  /* SCREENSHOTS */
-  .screenshots { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; text-align: center; }
-
-  .screenshots-scroll {
-    display: flex;
-    gap: 1.5rem;
-    overflow-x: auto;
-    padding: 2rem 0;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .screenshot-frame {
-    flex-shrink: 0;
-    width: 200px;
-    height: 420px;
-    background: var(--purple-light);
-    border-radius: 24px;
-    border: 2px solid rgba(124,58,237,0.2);
-    scroll-snap-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1.5rem;
-    transition: transform 0.2s;
-  }
-
-  .screenshot-frame:hover { transform: scale(1.03); }
-
-  .screenshot-frame .screen-emoji { font-size: 3rem; }
-  .screenshot-frame .screen-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--purple);
-    text-align: center;
-  }
-
-  /* CTA FINAL */
-  .cta-final {
-    background: var(--purple);
-    color: white;
-    text-align: center;
-    padding: 6rem 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-final::before {
-    content: '🍻';
-    position: absolute;
-    font-size: 20rem;
-    opacity: 0.04;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-
-  .cta-title {
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 1.5rem;
-  }
-
-  .cta-sub {
-    font-size: 1.1rem;
-    opacity: 0.8;
-    margin-bottom: 3rem;
-    max-width: 40ch;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .cta-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .btn-cta {
-    background: white;
-    color: var(--purple);
-    padding: 1rem 2rem;
-    border-radius: 14px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
-    transition: transform 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .btn-cta:hover { transform: translateY(-2px); }
-  .btn-cta.outline { background: transparent; border: 2px solid rgba(255,255,255,0.5); color: white; }
-
-  /* FOOTER */
-  footer {
-    background: var(--black);
-    color: rgba(255,255,255,0.5);
-    padding: 3rem 2rem;
-    text-align: center;
-  }
-
-  .footer-inner { max-width: 1200px; margin: 0 auto; }
-
-  .footer-logo {
-    font-weight: 800;
-    font-size: 1.3rem;
-    color: white;
-    margin-bottom: 1rem;
-  }
-
-  .footer-logo span { color: var(--purple-mid); }
-
-  .footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 1.5rem 0;
-    flex-wrap: wrap;
-  }
-
-  .footer-links a {
-    color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    font-size: 0.85rem;
-    transition: color 0.15s;
-  }
-
-  .footer-links a:hover { color: white; }
-
-  .footer-copy { font-size: 0.8rem; margin-top: 1.5rem; }
-
-  /* RESPONSIVE */
-  @media (max-width: 640px) {
-    nav { padding: 1rem; }
-    .hero { padding: 7rem 1.25rem 4rem; }
-    .section { padding: 4rem 1.25rem; }
-    .modos-section { padding: 4rem 1.25rem; }
-    .porques { padding: 4rem 1.25rem; }
-    .screenshots { padding: 4rem 1.25rem; }
-    .cta-final { padding: 4rem 1.25rem; }
-    .hero-buttons { flex-direction: column; }
-    .btn-store { justify-content: center; }
-  }
-
-  /* REDUCED MOTION */
-  @media (prefers-reduced-motion: reduce) {
-    .ticker-inner { animation: none; }
-    * { transition: none !important; }
-  }
-</style>
+    <title>Code coverage report for lib/</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    🥃 <span>La</span> Previa
-  </a>
-  <a href="#descargar" class="nav-cta">Descargar gratis</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-eyebrow">
-    🍻 +13 juegos · Gratis · Sin suscripciones
-  </div>
-  <h1 class="hero-headline">
-    El juego de beber <span class="accent">definitivo.</span>
-  </h1>
-  <p class="hero-sub">
-    Todos los juegos que ya conoces, y muchos nuevos, en una sola app. Sin anuncios molestos en mitad de la partida. Sin suscripciones. Sin excusas.
-  </p>
-  <div class="hero-buttons" id="descargar">
-    <a href="#" class="btn-store primary">
-      <span class="btn-store-icon">🍎</span>
-      <span class="btn-store-text">
-        <small>Disponible en</small>
-        <strong>App Store</strong>
-      </span>
-    </a>
-    <a href="#" class="btn-store secondary">
-      <span class="btn-store-icon">🤖</span>
-      <span class="btn-store-text">
-        <small>Disponible en</small>
-        <strong>Google Play</strong>
-      </span>
-    </a>
-  </div>
-  <div class="hero-social-proof">
-    <span class="hero-stars">★★★★★</span>
-    <p class="hero-proof-text"><strong>Gratis</strong> para descargar · Algunos juegos se desbloquean viendo un vídeo</p>
-  </div>
-</section>
-
-<!-- TICKER -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-inner">
-    <span>🃏 Yo Nunca</span>
-    <span>💣 La Bomba</span>
-    <span>🎯 Verdad o Reto</span>
-    <span>🐎 Carrera de Caballos</span>
-    <span>👑 Rey de la Copa</span>
-    <span>🕵️ El Impostor</span>
-    <span>🎭 Mímica</span>
-    <span>🗣️ Alias</span>
-    <span>⏱️ 5 Segundos</span>
-    <span>🃏 Mayor o Menor</span>
-    <span>🎲 Oca Borracha</span>
-    <span>🎮 Parchís Borracho</span>
-    <span>⚔️ Comandante</span>
-    <span>🃏 Yo Nunca</span>
-    <span>💣 La Bomba</span>
-    <span>🎯 Verdad o Reto</span>
-    <span>🐎 Carrera de Caballos</span>
-    <span>👑 Rey de la Copa</span>
-    <span>🕵️ El Impostor</span>
-    <span>🎭 Mímica</span>
-    <span>🗣️ Alias</span>
-    <span>⏱️ 5 Segundos</span>
-    <span>🃏 Mayor o Menor</span>
-    <span>🎲 Oca Borracha</span>
-    <span>🎮 Parchís Borracho</span>
-    <span>⚔️ Comandante</span>
-  </div>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">lib/</span></h1>
+    <h2>
+        Statements: <span class="metric">98.01% <small>(148 / 151)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">92.94% <small>(79 / 85)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(20 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">99.31% <small>(143 / 144)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; lib/</div>
 </div>
+<div class="body">
+<div class="coverage-summary">
+<table>
+<thead>
+<tr>
+   <th data-col="file" data-fmt="html" data-html="true" class="file">File</th>
+   <th data-col="pic" data-type="number" data-fmt="html" data-html="true" class="pic"></th>
+   <th data-col="statements" data-type="number" data-fmt="pct" class="pct">Statements</th>
+   <th data-col="statements_raw" data-type="number" data-fmt="html" class="abs"></th>
+   <th data-col="branches" data-type="number" data-fmt="pct" class="pct">Branches</th>
+   <th data-col="branches_raw" data-type="number" data-fmt="html" class="abs"></th>
+   <th data-col="functions" data-type="number" data-fmt="pct" class="pct">Functions</th>
+   <th data-col="functions_raw" data-type="number" data-fmt="html" class="abs"></th>
+   <th data-col="lines" data-type="number" data-fmt="pct" class="pct">Lines</th>
+   <th data-col="lines_raw" data-type="number" data-fmt="html" class="abs"></th>
+</tr>
+</thead>
+<tbody><tr>
+	<td class="file high" data-value="constants.js"><a href="constants.js.html">constants.js</a></td>
+	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	</tr>
 
-<!-- JUEGOS -->
-<div class="section">
-  <p class="section-eyebrow">El catálogo</p>
-  <h2 class="section-title">+13 juegos.<br>Todos en una app.</h2>
-  <p class="section-sub">Desde clásicos de toda la vida hasta juegos nuevos que no habías probado. Nunca te quedas sin ideas para la noche.</p>
-  <div class="games-grid">
-    <div class="game-card"><span class="game-emoji">🃏</span><div class="game-info"><div class="game-name">Yo Nunca</div><div class="game-players">2–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">⚔️</span><div class="game-info"><div class="game-name">Comandante</div><div class="game-players">2–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">🎯</span><div class="game-info"><div class="game-name">Verdad o Reto</div><div class="game-players">2–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">🃏</span><div class="game-info"><div class="game-name">Mayor o Menor</div><div class="game-players">2–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">⏱️</span><div class="game-info"><div class="game-name">5 Segundos</div><div class="game-players">2–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">💣</span><div class="game-info"><div class="game-name">La Bomba</div><div class="game-players">2–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">🐎</span><div class="game-info"><div class="game-name">Carrera de Caballos</div><div class="game-players">2–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">🎭</span><div class="game-info"><div class="game-name">Mímica</div><div class="game-players">4–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">🗣️</span><div class="game-info"><div class="game-name">Alias</div><div class="game-players">4–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">👑</span><div class="game-info"><div class="game-name">Rey de la Copa</div><div class="game-players">2–10 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">🎲</span><div class="game-info"><div class="game-name">Oca Borracha</div><div class="game-players">2–6 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">🎮</span><div class="game-info"><div class="game-name">Parchís Borracho</div><div class="game-players">2–4 jugadores</div></div></div>
-    <div class="game-card"><span class="game-emoji">🕵️</span><div class="game-info"><div class="game-name">El Impostor</div><div class="game-players">3–10 jugadores</div></div></div>
-  </div>
+<tr>
+	<td class="file high" data-value="readable_streambuffer.js"><a href="readable_streambuffer.js.html">readable_streambuffer.js</a></td>
+	<td data-value="98.82" class="pic high"><span class="cover-fill" style="width: 98px;"></span><span class="cover-empty" style="width:2px;"></span></td>
+	<td data-value="98.82" class="pct high">98.82%</td>
+	<td data-value="85" class="abs high">(84&nbsp;/&nbsp;85)</td>
+	<td data-value="94.34" class="pct high">94.34%</td>
+	<td data-value="53" class="abs high">(50&nbsp;/&nbsp;53)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="11" class="abs high">(11&nbsp;/&nbsp;11)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="83" class="abs high">(83&nbsp;/&nbsp;83)</td>
+	</tr>
+
+<tr>
+	<td class="file high" data-value="streambuffer.js"><a href="streambuffer.js.html">streambuffer.js</a></td>
+	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="3" class="abs high">(3&nbsp;/&nbsp;3)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="3" class="abs high">(3&nbsp;/&nbsp;3)</td>
+	</tr>
+
+<tr>
+	<td class="file high" data-value="writable_streambuffer.js"><a href="writable_streambuffer.js.html">writable_streambuffer.js</a></td>
+	<td data-value="96.77" class="pic high"><span class="cover-fill" style="width: 96px;"></span><span class="cover-empty" style="width:4px;"></span></td>
+	<td data-value="96.77" class="pct high">96.77%</td>
+	<td data-value="62" class="abs high">(60&nbsp;/&nbsp;62)</td>
+	<td data-value="90.63" class="pct high">90.63%</td>
+	<td data-value="32" class="abs high">(29&nbsp;/&nbsp;32)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="9" class="abs high">(9&nbsp;/&nbsp;9)</td>
+	<td data-value="98.25" class="pct high">98.25%</td>
+	<td data-value="57" class="abs high">(56&nbsp;/&nbsp;57)</td>
+	</tr>
+
+</tbody>
+</table>
 </div>
-
-<!-- MODOS -->
-<div class="modos-section">
-  <div class="modos-inner">
-    <p class="section-eyebrow">Tres formas de jugar</p>
-    <h2 class="section-title">Cada noche es distinta.</h2>
-    <p class="section-sub">Tú decides cómo empieza la noche. La Previa decide cómo acaba.</p>
-    <div class="modos-grid">
-      <div class="modo-card escalada">
-        <div class="modo-icon">🔥</div>
-        <div class="modo-name">Escalada</div>
-        <div class="modo-desc">La app elige los juegos por vosotros y sube la intensidad poco a poco. Empezamos suave y acabamos con todo. Para arrancar sin pensar.</div>
-      </div>
-      <div class="modo-card competicion">
-        <div class="modo-icon">🏆</div>
-        <div class="modo-name">Competición</div>
-        <div class="modo-desc">Marcador real de quién bebe más en toda la noche. Al final: podio, campeón, y muerte súbita si hay empate. Para los que no juegan por jugar.</div>
-      </div>
-      <div class="modo-card libre">
-        <div class="modo-icon">🎮</div>
-        <div class="modo-name">Juego Libre</div>
-        <div class="modo-desc">Vosotros elegís el juego del menú y jugáis a vuestro ritmo, sin rondas ni marcador. Perfecto si ya sabéis lo que os gusta.</div>
-      </div>
-    </div>
-  </div>
 </div>
-
-<!-- POR QUÉ -->
-<div class="porques">
-  <div class="porques-inner">
-    <p class="section-eyebrow">Por qué La Previa</p>
-    <h2 class="section-title">Sin trampa. Sin cartón.</h2>
-    <p class="section-sub">Diseñada para grupos reales, en fiestas reales, sin la letra pequeña de otras apps.</p>
-    <div class="porques-grid">
-      <div class="porque-card">
-        <div class="porque-icon">🚫</div>
-        <div class="porque-title">Sin suscripciones</div>
-        <div class="porque-desc">Nunca jamás. Pagamos la app con anuncios voluntarios y un pago único opcional, no con cuotas semanales que nadie quiere.</div>
-      </div>
-      <div class="porque-card">
-        <div class="porque-icon">🇪🇸</div>
-        <div class="porque-title">100% en español</div>
-        <div class="porque-desc">Contenido creado desde España para hispanohablantes de todo el mundo. Sin traducciones raras ni frases que no tienen sentido.</div>
-      </div>
-      <div class="porque-card">
-        <div class="porque-icon">📵</div>
-        <div class="porque-title">Sin anuncios en mitad del juego</div>
-        <div class="porque-desc">Los anuncios solo aparecen para desbloquear contenido extra, nunca mientras estás jugando. La fiesta no se para.</div>
-      </div>
-      <div class="porque-card">
-        <div class="porque-icon">⚡</div>
-        <div class="porque-title">Sin login, en segundos</div>
-        <div class="porque-desc">Abres la app, pones los nombres de los jugadores y empezáis. Sin registro, sin cuenta, sin pasos de más.</div>
-      </div>
-    </div>
-  </div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jul 01 2015 04:16:19 GMT+0000 (UTC)</div>
 </div>
-
-<!-- SCREENSHOTS -->
-<div class="screenshots">
-  <p class="section-eyebrow">La app por dentro</p>
-  <h2 class="section-title" style="text-align:center; margin: 0 auto 1rem;">Diseñada para la fiesta.</h2>
-  <p class="section-sub" style="margin: 0 auto 0; text-align:center;">Cada juego tiene su propia identidad visual. La Bomba en negro dramático, Yo Nunca en cartas con niveles de color, Carrera de Caballos con animación en tiempo real.</p>
-  <div class="screenshots-scroll">
-    <div class="screenshot-frame">
-      <span class="screen-emoji">🏠</span>
-      <span class="screen-label">Pantalla de inicio limpia y directa</span>
-    </div>
-    <div class="screenshot-frame">
-      <span class="screen-emoji">🎮</span>
-      <span class="screen-label">Menú de +13 juegos</span>
-    </div>
-    <div class="screenshot-frame">
-      <span class="screen-emoji">💣</span>
-      <span class="screen-label">La Bomba — tensión real</span>
-    </div>
-    <div class="screenshot-frame">
-      <span class="screen-emoji">🐎</span>
-      <span class="screen-label">Carrera en directo</span>
-    </div>
-    <div class="screenshot-frame">
-      <span class="screen-emoji">🏆</span>
-      <span class="screen-label">Podio al final de la noche</span>
-    </div>
-  </div>
-</div>
-
-<!-- CTA FINAL -->
-<div class="cta-final">
-  <h2 class="cta-title">¿A qué esperas?</h2>
-  <p class="cta-sub">La previa te está esperando. Descárgala gratis y que empiece la noche.</p>
-  <div class="cta-buttons">
-    <a href="#" class="btn-cta">🍎 App Store</a>
-    <a href="#" class="btn-cta">🤖 Google Play</a>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">🥃 La <span>Previa</span></div>
-    <p style="font-size:0.85rem; max-width: 40ch; margin: 0 auto;">El juego de beber definitivo. Disponible para iOS y Android.</p>
-    <div class="footer-links">
-      <a href="/privacidad">Política de privacidad</a>
-      <a href="mailto:yeissyapps@gmail.com">Contacto</a>
-      <a href="#descargar">Descargar</a>
-    </div>
-    <p class="footer-copy">© 2026 YeissyApps. Bebe con responsabilidad. +18.</p>
-  </div>
-</footer>
-
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
 </body>
 </html>
